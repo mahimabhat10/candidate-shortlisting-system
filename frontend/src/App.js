@@ -11,7 +11,7 @@ function App() {
 
   const addCandidate = async () => {
     try {
-      await axios.post("http://localhost:5000/api/candidates", {
+      await axios.post("https://candidate-shortlisting-system-p7t8.onrender.com", {
         name,
         skills: skills.split(","),
         experience,
@@ -30,7 +30,7 @@ function App() {
   const aiShortlist = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/ai/shortlist"
+        "https://candidate-shortlisting-system-p7t8.onrender.com"
       );
 
       setShortlisted(res.data.shortlisted);
