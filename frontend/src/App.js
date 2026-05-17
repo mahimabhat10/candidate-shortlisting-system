@@ -6,16 +6,19 @@ function App() {
   const [name, setName] = useState("");
   const [skills, setSkills] = useState("");
   const [experience, setExperience] = useState("");
-
   const [shortlisted, setShortlisted] = useState([]);
 
+  // Add Candidate
   const addCandidate = async () => {
     try {
-      await axios.post("https://candidate-shortlisting-system-p7t8.onrender.com", {
-        name,
-        skills: skills.split(","),
-        experience,
-      });
+      await axios.post(
+        "https://candidate-shortlisting-system-p7t8.onrender.com/api/candidates",
+        {
+          name,
+          skills: skills.split(","),
+          experience,
+        }
+      );
 
       setName("");
       setSkills("");
@@ -24,18 +27,21 @@ function App() {
       alert("Candidate Added Successfully");
     } catch (error) {
       console.log(error);
+      alert("Error adding candidate");
     }
   };
 
+  // AI Shortlist
   const aiShortlist = async () => {
     try {
       const res = await axios.post(
-        "https://candidate-shortlisting-system-p7t8.onrender.com"
+        "https://candidate-shortlisting-system-p7t8.onrender.com/api/ai/shortlist"
       );
 
       setShortlisted(res.data.shortlisted);
     } catch (error) {
       console.log(error);
+      alert("Error shortlisting candidates");
     }
   };
 
@@ -82,13 +88,11 @@ function App() {
             <h2>{candidate.name}</h2>
 
             <p>
-              <strong>Skills:</strong>{" "}
-              {candidate.skills.join(", ")}
+              <strong>Skills:</strong> {candidate.skills.join(", ")}
             </p>
 
             <p>
-              <strong>Experience:</strong>{" "}
-              {candidate.experience} years
+              <strong>Experience:</strong> {candidate.experience} years
             </p>
 
             <p className="score">
